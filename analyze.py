@@ -1,5 +1,7 @@
 import pandas as pd
 from sweetviz.sv_public import analyze
+from collections import Counter
+
 
 if __name__ == "__main__":
     df = pd.read_csv('xhamster.csv.tar.gz')
@@ -9,9 +11,17 @@ if __name__ == "__main__":
 
     df = pd.read_csv('xnxx.csv.tar.gz')
     df['n_tags'] = df['tags'].apply(len)
-    df['tags'] = df['tags'].apply(eval)  # Convert string representation of list to actual list
-    df_exploded = df.explode('tags')
-    tag_counts = df_exploded['tags'].value_counts()
+
+    counter = Counter()
+
+    def my_split(s):
+        counter.update(s.replace("[u", "").replace("']", "'").replace("u'", "'").split(", "))
+
+    df['tags'].apply(counter)
+
+    with open('tags_counts.txt', 'w') as f:
+        for l in zip(count.keys(), count.values()):
+            f.write("%s\t%i\n" % (l[0], l[1]))
 
     analyze_report = analyze(df)
     analyze_report.show_html('xnxx.html', open_browser=True)
