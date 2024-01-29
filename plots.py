@@ -18,6 +18,8 @@ class DataVisualiser:
         plt.title('Count of Words in '+text_col+' Over Time')
         plt.show()
 
-# Usage
-visualizer = DataVisualiser(df)
-visualizer.plot_word_count_over_time('upload_date', 'title')
+if __name__ == "__main__":
+    # Usage
+    df = pd.read_csv('xnxx.csv.tar.gz')
+    visualizer = DataVisualiser(df)
+    visualizer.plot_word_count_over_time('upload_date', 'title')

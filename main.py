@@ -34,10 +34,11 @@ class DataAnalyser:
             self.df[col+'_wordcount'] = self.df[col].apply(lambda x: len(str(x).split()))
             print(f"{col}: {self.df[col+'_wordcount'].sum()} words")
 
-# Usage
-# analyzer = DataAnalyser('xhamster.csv.tar.gz')
-analyzer = DataAnalyser('xnxx.csv.tar.gz')
-analyzer.print_summary()
-analyzer.print_missing_values()
-analyzer.print_unique_values()
-analyzer.print_word_counts()
+if __name__ == "__main__":
+    # Usage
+    # analyzer = DataAnalyser('xhamster.csv.tar.gz')
+    analyzer = DataAnalyser('xnxx.csv.tar.gz')
+    analyzer.print_summary()
+    analyzer.print_missing_values()
+    analyzer.print_unique_values()
+    analyzer.print_word_counts()
