@@ -28,5 +28,4 @@ def calculate_consecutive_upload(file_path):
 
     print(f"{percentage_consecutive:.2%} videos were uploaded on consecutive days")
 
-
 calculate_consecutive_upload('porn-with-dates-2022.csv')
