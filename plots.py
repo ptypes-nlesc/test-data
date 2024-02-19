@@ -20,6 +20,6 @@ class DataVisualiser:
 
 if __name__ == "__main__":
     # Usage
-    df = pd.read_csv('xnxx.csv.tar.gz')
+    df = pd.read_csv('porn-with-dates-2022.csv')
     visualizer = DataVisualiser(df)
-    visualizer.plot_word_count_over_time('upload_date', 'title')
+    visualizer.plot_word_count_over_time('date', 'categories')
