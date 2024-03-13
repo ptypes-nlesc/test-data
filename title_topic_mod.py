@@ -1,8 +1,11 @@
+# adapted from https://ourcodingclub.github.io/tutorials/topic-modelling-python/
 import re
 
 import nltk
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
+
+# from sklearn.decomposition import NMF
 
 df = pd.read_csv("porn-with-dates-2022.csv")
 
@@ -38,17 +41,42 @@ def clean_title(t, bigrams=False):
     t = " ".join(t_token_list)
     return t
 
-df['clean_title'] = df.title.apply(clean_title)
+
+df["clean_title"] = df.title.apply(clean_title)
 
 # the vectorizer object will be used to transform text to vector form
 # discarding words that appear in more than 90% of the titles
 # discarding words that appear in less than 25 titles
-# TODO tweaks numbers 
+# TODO tweaks numbers
 
-vectorizer = CountVectorizer(max_df=0.9, min_df=25, token_pattern='\w+|\$[\d\.]+|\S+')
+vectorizer = CountVectorizer(max_df=0.9, min_df=25, token_pattern="\w+|\$[\d\.]+|\S+")
 
-title_freq = vectorizer.fit_transform(df['clean_title'])
-title_freq = title_freq.toarray()
+title_freq = vectorizer.fit_transform(df["clean_title"]).toarray()
 title_freq_features = vectorizer.get_feature_names_out()
 
 title_freq.shape
+title_freq_features
+
+from sklearn.decomposition import LatentDirichletAllocation
+
+number_of_topics = 10
+
+model = LatentDirichletAllocation(n_components=number_of_topics, random_state=0)
+model.fit(title_freq)
+
+
+def display_topics(model, feature_names, no_top_words):
+    topic_dict = {}
+    for topic_idx, topic in enumerate(model.components_):
+        topic_dict["Topic %d words" % (topic_idx)] = [
+            "{}".format(feature_names[i])
+            for i in topic.argsort()[: -no_top_words - 1 : -1]
+        ]
+        topic_dict["Topic %d weights" % (topic_idx)] = [
+            "{:.1f}".format(topic[i]) for i in topic.argsort()[: -no_top_words - 1 : -1]
+        ]
+    return pd.DataFrame(topic_dict)
+
+
+no_top_words = 10
+display_topics(model, title_freq_features, no_top_words)
