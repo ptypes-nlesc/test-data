@@ -51,7 +51,7 @@ popular_tags.head(30).plot(kind="bar", x="tag", y="counts")
 counts = df_flat_tag.groupby(["tag"]).size().reset_index(name="counts").counts
 
 # take 3rd quantile to find popular tags
-min_appearance = counts.quantile(0.75)
+min_appearance = counts.quantile(0.70)
 
 # find popular tags - make into python set for efficiency
 popular_tags_set = set(popular_tags[popular_tags.counts >= min_appearance]["tag"])
