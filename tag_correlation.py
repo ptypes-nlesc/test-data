@@ -94,8 +94,8 @@ plt.figure(figsize=(10, 10))
 sns.heatmap(
     correlations,
     cmap="RdBu",
-    vmin=-1,
-    vmax=1,
+    vmin=-0.5,
+    vmax=0.5,
     square=True,
     cbar_kws={"label": "correlation"},
 )
