@@ -6,6 +6,8 @@ import pandas as pd
 
 # drop HDPorn from tags
 
+#TODO refactor to class
+
 
 def extract_tags(categories):
     """
